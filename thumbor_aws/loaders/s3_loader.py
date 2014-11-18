@@ -1,7 +1,7 @@
 # coding: utf-8
 
-from boto.s3.bucket import Bucket
-from boto.s3.key import Key
+from botornado.s3.connection import AsyncS3Connection
+from botornado.s3.bucket import AsyncBucket
 import urllib2
 
 import thumbor_aws.connection
@@ -30,6 +30,17 @@ def _validate_bucket(context,bucket):
     return False
 
 
+def _establish_connection(context_config):
+    conn = connection
+    if conn is None:
+        # Store connection not bucket
+        conn = AsyncS3Connection(
+            context_config.AWS_ACCESS_KEY,
+            context_config.AWS_SECRET_KEY
+        )
+
+    return conn
+
 def load(context, url, callback):
     
     enable_http_loader = context.config.get('AWS_ENABLE_HTTP_LOADER', default=False)
@@ -46,13 +57,17 @@ def load(context, url, callback):
         if not _validate_bucket(context, bucket):
             return callback(None)
 
-    bucket_loader = Bucket(
-        connection=thumbor_aws.connection.get_connection(context),
+    conn = _establish_connection(context.config)
+
+    bucket_loader = AsyncBucket(
+        connection=conn,
         name=bucket
     )
 
-    file_key = bucket_loader.get_key(url)
-    if not file_key:
-        return callback(None)
+    def key_callback(file_key):
+        if file_key:
+            file_key.read(callback=callback)
+        else:
+            callback(None)
 
-    return callback(file_key.read())
+    bucket_loader.get_key(url, callback=key_callback)
