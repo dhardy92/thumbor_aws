@@ -1,0 +1,13 @@
+machine:
+  services:
+    - docker
+  python:
+    version: 2.7
+
+dependencies:
+  override:
+    - pip install pyvows tornado_pyvows thumbor botornado coverage
+
+test:
+  override:
+    - pyvows -c -l thumbor_aws

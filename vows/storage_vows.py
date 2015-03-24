@@ -16,7 +16,7 @@ from thumbor.app import ThumborServiceApp
 from thumbor.importer import Importer
 from thumbor.context import Context, ServerParameters
 from thumbor.config import Config
-from fixtures.storage_fixture import IMAGE_URL, IMAGE_BYTES, get_server, AWS
+from fixtures.storage_fixture import IMAGE_URL, IMAGE_BYTES, get_server
 import time
 
 from boto.s3.connection import S3Connection
