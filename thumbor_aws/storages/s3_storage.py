@@ -10,8 +10,8 @@ from os.path import splitext, join
 from thumbor.storages import BaseStorage
 from thumbor.utils import logger
 
-from boto.s3.bucket import Bucket
-from boto.s3.key import Key
+from botornado.s3.bucket import AsyncBucket as Bucket
+from botornado.s3.key import AsyncKey as Key
 from dateutil.parser import parse as parse_ts
 
 import thumbor_aws.connection

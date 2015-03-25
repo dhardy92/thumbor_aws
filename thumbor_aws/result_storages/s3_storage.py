@@ -8,8 +8,8 @@ import os
 from thumbor.result_storages import BaseStorage
 from thumbor.utils import logger
 
-from boto.s3.bucket import Bucket
-from boto.s3.key import Key
+from botorndao.s3.bucket import AsyncBucket as Bucket
+from botorndao.s3.key import AsncKey as Key
 from dateutil.parser import parse as parse_ts
 
 import thumbor_aws.connection

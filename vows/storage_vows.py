@@ -19,8 +19,8 @@ from thumbor.config import Config
 from fixtures.storage_fixture import IMAGE_URL, IMAGE_BYTES, get_server
 import time
 
-from boto.s3.connection import S3Connection
-from boto.s3.key import Key
+from botornado.s3.connection import AsyncS3Connection as S3Connection
+from botornado.s3.key import AsyncKey as AsyncKey
 
 from thumbor_aws.storages.s3_storage import Storage
 
