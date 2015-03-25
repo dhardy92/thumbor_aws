@@ -7,6 +7,7 @@ machine:
 dependencies:
   override:
     - pip install pyvows coverage tornado_pyvows thumbor botornado py-dateutil
+    - sed 's/default/Credentials/' ~/.aws/credentials > ~/.boto #required for boto v2.2.2 included in botornado (cf http://boto.readthedocs.org/en/2.2.2/boto_config_tut.html)
 
 test:
   override:
